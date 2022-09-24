@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row justify-content-between">
+        <div class="col-4">
+            <h5 class="h3">Tickets</h5>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-primary mb-2" type="button" (click)="addTicket()" nbButton>Add Ticket</button>
+        </div>
+    </div>
+    <br>
+    <table class="table  table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Phone</th>
+                <th>Ticket Status</th>
+                <th>Governorate</th>
+                <th>City</th>
+                <th>District</th>
+            </tr>
+        </thead>
+        <tr *ngFor="let ticket of tickets| paginate : pagingConfig; let i = index"
+            [ngStyle]="getStatusColor(ticket.status)">
+            <td>{{ ticket.id }}</td>
+            <td>{{ ticket.phone }}</td>
+            <td>{{ getStatusName(ticket.status) }}</td>
+            <td>{{ getGovernorateName(ticket.governorateId) }}</td>
+            <td>{{ getCitiesName(ticket.cityId) }}</td>
+            <td>{{ getDistrictName(ticket.districtId) }}</td>
+            <td><button class="btn btn-success mb-2" type="button" (click)="handleTicket(ticket.id)"
+                    [disabled]="ticketHandleTimeExpired(ticket)">Handle Ticket</button></td>
+        </tr>
+    </table>
+    <div class="d-flex justify-content-center">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+        </pagination-controls>
+    </div>
+</div>
